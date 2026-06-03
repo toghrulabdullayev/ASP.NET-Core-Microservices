@@ -1,0 +1,1 @@
+(1) csharpier check . -> throws error if formatting is wrong in any files
