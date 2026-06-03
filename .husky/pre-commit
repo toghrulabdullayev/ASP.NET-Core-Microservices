@@ -20,4 +20,5 @@
 #echo 'Husky.Net is awesome!'
 
 dotnet csharpier format .
+git add -A
 dotnet csharpier check .
