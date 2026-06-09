@@ -1,8 +1,19 @@
+using Catalog.Infrastructure.Settings;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+
+builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("DatabaseSettings"));
+
+builder.Services.AddSingleton<IMongoClient>(sp =>
+{
+	var settings = sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
+	return new MongoClient(settings.ConnectionString);
+});
 
 var app = builder.Build();
 
@@ -13,6 +24,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
 
 var summaries = new[]
 {
