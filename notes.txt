@@ -1,1 +1,10 @@
 (1) csharpier check . -> throws error if formatting is wrong in any files
+
+(2) records are immutable reference types that provide built-in functionality for value equality,
+immutability, and concise syntax for defining data structures. They are ideal for representing
+data transfer objects (DTOs) in applications, as they allow you to easily create and manipulate
+data without worrying about mutability or reference equality issues.
+
+(3) init can only be set during object initialization, making the object immutable after creation.
+This is useful for DTOs to ensure that their state cannot be changed after they have been created.
+public string Name { get; init; }
