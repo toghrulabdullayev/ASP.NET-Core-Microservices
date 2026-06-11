@@ -21,7 +21,7 @@ namespace Catalog.Application.Handlers
 			CancellationToken cancellationToken
 		)
 		{
-			var productList = await _productRepository.GetProductsByName(request.name);
+			var productList = await _productRepository.GetProductsByName(request.Name);
 			return productList.ToResponseList();
 		}
 	}

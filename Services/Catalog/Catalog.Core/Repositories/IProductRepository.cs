@@ -13,7 +13,7 @@ namespace Catalog.Core.Repositories
 		Task<Product> CreateProduct(Product product);
 		Task<bool> UpdateProduct(Product product);
 		Task<bool> DeleteProduct(string productId);
-		Task<ProductBrand> GetBrandsById(string brandId);
-		Task<ProductType> GetTypesById(string typeId);
+		Task<ProductBrand> GetBrandById(string brandId);
+		Task<ProductType> GetTypeById(string typeId);
 	}
 }
