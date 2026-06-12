@@ -23,15 +23,10 @@ namespace Catalog.Application.DTOs
 	public record class CreateProductDto
 	{
 		public string Name { get; init; } = null!;
-
 		public string Summary { get; init; } = null!;
-
 		public string Description { get; init; } = null!;
-
 		public string ImageFile { get; init; } = null!;
-
 		public string BrandId { get; init; } = null!;
-
 		public string TypeId { get; init; } = null!;
 
 		[Range(0.01, double.MaxValue, ErrorMessage = "Price must be greater than zero.")]
@@ -42,15 +37,10 @@ namespace Catalog.Application.DTOs
 	{
 		// equivalent of [Required] decorator for record types
 		public string Name { get; init; } = null!;
-
 		public string Summary { get; init; } = null!;
-
 		public string Description { get; init; } = null!;
-
 		public string ImageFile { get; init; } = null!;
-
 		public string BrandId { get; init; } = null!;
-
 		public string TypeId { get; init; } = null!;
 
 		[Range(0.01, double.MaxValue, ErrorMessage = "Price must be greater than zero.")]
