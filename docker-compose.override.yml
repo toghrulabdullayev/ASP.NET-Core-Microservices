@@ -1,0 +1,25 @@
+services:
+  catalogdb:
+    container_name: catalogdb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: secret123
+
+  # double _ maps to : in the appsettings.json file, so we can set nested config values using env vars
+  catalog:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings__ConnectionString=mongodb://admin:secret123@catalogdb:27017/?authSource=admin"
+      - "DatabaseSettings__DatabaseName=CatalogDb"
+      - "DatabaseSettings__ProductCollectionName=Products"
+      - "DatabaseSettings__BrandCollectionName=Brands"
+      - "DatabaseSettings__TypeCollectionName=Types"
+    depends_on:
+      - catalogdb
+    ports:
+      - "8000:8080"

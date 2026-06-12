@@ -36,6 +36,70 @@
         "${workspaceFolder}/Ecommerce/Services/Catalog/Catalog.API/Catalog.API.csproj"
       ],
       "problemMatcher": "$msCompile"
+    },
+    {
+      "type": "docker-build",
+      "label": "docker-build: debug",
+      "dependsOn": [
+        "build"
+      ],
+      "dockerBuild": {
+        "tag": "aspnetcoremicroservices:dev",
+        "target": "base",
+        "dockerfile": "${workspaceFolder}/Services/Catalog/Catalog.API/Dockerfile",
+        "context": "${workspaceFolder}",
+        "pull": true
+      },
+      "netCore": {
+        "appProject": "${workspaceFolder}/Services/Catalog/Catalog.API/Catalog.API.csproj"
+      }
+    },
+    {
+      "type": "docker-build",
+      "label": "docker-build: release",
+      "dependsOn": [
+        "build"
+      ],
+      "dockerBuild": {
+        "tag": "aspnetcoremicroservices:latest",
+        "dockerfile": "${workspaceFolder}/Services/Catalog/Catalog.API/Dockerfile",
+        "context": "${workspaceFolder}",
+        "platform": {
+          "os": "windows",
+          "architecture": "amd64"
+        },
+        "pull": true
+      },
+      "netCore": {
+        "appProject": "${workspaceFolder}/Services/Catalog/Catalog.API/Catalog.API.csproj"
+      }
+    },
+    {
+      "type": "docker-run",
+      "label": "docker-run: debug",
+      "dependsOn": [
+        "docker-build: debug"
+      ],
+      "dockerRun": {
+        "os": "Windows"
+      },
+      "netCore": {
+        "appProject": "${workspaceFolder}/Services/Catalog/Catalog.API/Catalog.API.csproj",
+        "enableDebugging": true
+      }
+    },
+    {
+      "type": "docker-run",
+      "label": "docker-run: release",
+      "dependsOn": [
+        "docker-build: release"
+      ],
+      "dockerRun": {
+        "os": "Windows"
+      },
+      "netCore": {
+        "appProject": "${workspaceFolder}/Services/Catalog/Catalog.API/Catalog.API.csproj"
+      }
     }
   ]
 }

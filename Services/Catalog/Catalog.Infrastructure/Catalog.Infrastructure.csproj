@@ -1,5 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
+		<None Update="Data\SeedData\*.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+	<ItemGroup>
 		<ProjectReference Include="..\Catalog.Application\Catalog.Application.csproj" />
 		<ProjectReference Include="..\Catalog.Core\Catalog.Core.csproj" />
 	</ItemGroup>
