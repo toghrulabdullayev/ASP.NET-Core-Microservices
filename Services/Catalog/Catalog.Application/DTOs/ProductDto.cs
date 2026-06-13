@@ -20,7 +20,7 @@ namespace Catalog.Application.DTOs
 
 	// init can only be set during object initialization, making the object immutable after creation.
 	// This is useful for DTOs to ensure that their state cannot be changed after they have been created.
-	public record class CreateProductDto
+	public record CreateProductDto
 	{
 		public string Name { get; init; } = null!;
 		public string Summary { get; init; } = null!;
@@ -33,7 +33,7 @@ namespace Catalog.Application.DTOs
 		public decimal Price { get; init; }
 	}
 
-	public record class UpdateProductDto
+	public record UpdateProductDto
 	{
 		// equivalent of [Required] decorator for record types
 		public string Name { get; init; } = null!;
