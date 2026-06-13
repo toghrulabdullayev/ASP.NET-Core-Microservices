@@ -1,0 +1,49 @@
+(1) csharpier check . -> throws error if formatting is wrong in any files
+
+(2) records are immutable reference types that provide built-in functionality for value equality,
+immutability, and concise syntax for defining data structures. They are ideal for representing
+data transfer objects (DTOs) in applications, as they allow you to easily create and manipulate
+data without worrying about mutability or reference equality issues.
+
+(3) init can only be set during object initialization, making the object immutable after creation.
+This is useful for DTOs to ensure that their state cannot be changed after they have been created.
+public string Name { get; init; }
+
+(4) By default, .NET does not copy non-code files (like .json files) into the build output folder 
+or the Docker container unless you explicitly tell it to:
+    Catalog.Infrastructure.csproj:
+      <ItemGroup>
+        <None Update="Data\SeedData\*.json">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+      </ItemGroup>
+
+(5) Run this to connect to mongodb from terminal (localhost should be used instead of catalogdb):
+      mongosh "mongodb://admin:secret123@localhost:27017/?authSource=admin"
+
+(6) In Docker Compose, services inside the same compose file automatically join a shared internal virtual 
+network. Each container gets its own private IP (e.g. 172.20.0.x), but you never use these IPs directly 
+because they can change whenever containers restart.
+
+(7) Docker Compose provides built-in DNS resolution between services. This means each service name becomes 
+a hostname inside the network. For example, catalogdb automatically resolves to the MongoDB container’s 
+internal IP, so other containers can connect using:
+      mongodb://catalogdb:27017
+instead of using localhost or a raw IP address.
+
+(8) localhost inside a container always refers to the container itself, not your machine and not other 
+containers. That’s why mongodb://localhost:27017 from the catalog service appsettings.json will fail — it 
+tries to find MongoDB inside the same container.
+
+(9) Host machine ports (like "27017:27017") are only for access from your computer, not between containers. 
+Containers communicate using the internal container port (27017) and service name, while host port mapping 
+is only for external tools like mongosh, MongoDB Compass, or browser APIs.
+
+(10) When connecting from the host machine (outside Docker), you must use localhost:
+      mongosh "mongodb://admin:secret123@localhost:27017/?authSource=admin"
+    But when connecting from another container, you must use:
+      mongodb://catalogdb:27017
+
+(11) depends_on in Docker Compose only controls startup order, not readiness. It does NOT guarantee that 
+MongoDB is ready to accept connections — only that the container has started. Applications should still 
+handle retry logic for database connections.
