@@ -10,6 +10,12 @@ services:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: secret123
 
+  basketdb:
+    container_name: basketdb
+    restart: always
+    ports:
+      - "6379:6379"
+
   # double _ maps to : in the appsettings.json file, so we can set nested config values using env vars
   catalog:
     environment:
@@ -23,3 +29,12 @@ services:
       - catalogdb
     ports:
       - "8000:8080"
+
+  basket:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "CacheSettings__ConnectionString=basketdb:6379"
+    depends_on:
+      - basketdb
+    ports:
+      - "8001:8080"
