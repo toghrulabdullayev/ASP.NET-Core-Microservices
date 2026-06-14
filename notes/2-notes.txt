@@ -1,0 +1,2 @@
+(1) a delegate is a type-safe reference to a method (Func<type, type> makes it a delegate)
+      Func<int, int> square = x => x * x;

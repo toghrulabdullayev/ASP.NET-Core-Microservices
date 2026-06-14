@@ -3,5 +3,5 @@ using MediatR;
 
 namespace Catalog.Application.Queries
 {
-	public record GetAllBrandsQuery : IRequest<IList<BrandResponse>> { }
+	public record GetAllBrandsQuery : IRequest<IList<BrandResponse>>;
 }
