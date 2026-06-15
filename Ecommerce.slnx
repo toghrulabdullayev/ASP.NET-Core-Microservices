@@ -12,4 +12,10 @@
 		<Project Path="Services/Catalog/Catalog.Core/Catalog.Core.csproj" />
 		<Project Path="Services/Catalog/Catalog.Infrastructure/Catalog.Infrastructure.csproj" />
 	</Folder>
+	<Folder Name="/Services/Discount/">
+		<Project Path="Services/Discount/Discount.API/Discount.API.csproj" />
+		<Project Path="Services/Discount/Discount.Application/Discount.Application.csproj" />
+		<Project Path="Services/Discount/Discount.Core/Discount.Core.csproj" />
+		<Project Path="Services/Discount/Discount.Infrastructure/Discount.Infrastructure.csproj" />
+	</Folder>
 </Solution>
