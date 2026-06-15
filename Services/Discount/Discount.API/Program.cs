@@ -1,21 +1,29 @@
+using System.Reflection;
+using Discount.API.Services;
+using Discount.Application.Handlers;
+using Discount.Core.Repositories;
+using Discount.Infrastructure.Repositories;
 using Discount.Infrastructure.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+var assemblies = new Assembly[]
+{
+	Assembly.GetExecutingAssembly(),
+	typeof(CreateDiscountHandler).Assembly,
+};
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assemblies));
+
+builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
+
+builder.Services.AddGrpc();
 
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("DatabaseSettings"));
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-	app.MapOpenApi();
-}
-
-app.UseHttpsRedirection();
-app.UseAuthorization();
-app.MapControllers();
+app.MigrateDatabase();
+app.UseRouting();
+app.MapGrpcService<DiscountService>();
 
 app.Run();

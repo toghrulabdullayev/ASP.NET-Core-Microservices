@@ -3,6 +3,6 @@ using MediatR;
 
 namespace Discount.Application.Commands
 {
-	public record CreateDiscountCommand(string ProductName, string Description, int Amount)
+	public record UpdateDiscountCommand(int Id, string ProductName, string Description, int Amount)
 		: IRequest<CouponDto>;
 }

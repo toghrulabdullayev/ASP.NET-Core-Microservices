@@ -154,3 +154,112 @@ So this pattern:
 ```csharp
 await using var connection = new NpgsqlConnection(_connectionString);
 ```
+
+---
+
+# 3 `using static` in C# (gRPC context)
+
+## What it is
+
+`using static` allows you to import **static members and nested types** of a class so you can use them without repeating the full class name.
+
+```csharp
+using static Discount.Grpc.Protos.DiscountProtoService;
+```
+
+---
+
+## What it does
+
+Instead of writing the full nested type path:
+
+```csharp
+public class DiscountService
+    : Discount.Grpc.Protos.DiscountProtoService.DiscountProtoServiceBase
+{
+}
+```
+
+You can write:
+
+```csharp
+public class DiscountService : DiscountProtoServiceBase
+{
+}
+```
+
+---
+
+## What gets imported
+
+`using static` imports:
+
+- Static methods
+- Static fields
+- Static properties
+- Nested types (important in gRPC generated code)
+
+It does NOT import:
+
+- Instance members
+- Namespaces
+- Objects
+
+---
+
+## Why it is used in gRPC
+
+In gRPC, `.proto` files generate C# code like:
+
+```csharp
+DiscountProtoService.DiscountProtoServiceBase
+```
+
+So `using static` allows you to access:
+
+```csharp
+DiscountProtoServiceBase
+```
+
+directly, without repeating the full type path.
+
+---
+
+## In your case
+
+```csharp
+public class DiscountService : DiscountProtoServiceBase { }
+```
+
+This works because:
+
+- `DiscountProtoServiceBase` is a **nested type inside `DiscountProtoService`**
+- `using static` brings that nested type into the current scope
+
+---
+
+## When to use it
+
+✔ Useful for:
+
+- gRPC generated base classes
+- `System.Math`
+- Static helper utilities
+
+---
+
+## When NOT to use it
+
+❌ Avoid when:
+
+- It reduces code clarity
+- Multiple static imports cause ambiguity
+- In large systems where explicit naming is preferred
+
+---
+
+## Mental model
+
+Think of it as:
+
+> “Bring static members and nested types into scope so I don’t need to prefix them with the class name.”

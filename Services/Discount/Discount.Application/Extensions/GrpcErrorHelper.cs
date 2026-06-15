@@ -2,6 +2,9 @@ using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using Google.Rpc;
 using Grpc.Core;
+//! and here
+using GoogleStatus = Google.Rpc.Status;
+using GrpcStatus = Grpc.Core.Status;
 
 namespace Discount.Application.Extensions
 {
@@ -21,7 +24,8 @@ namespace Discount.Application.Extensions
 			var badRequest = new BadRequest();
 			badRequest.FieldViolations.AddRange(fieldViolations);
 
-			var status = new Google.Rpc.Status
+			//! here
+			var status = new GoogleStatus
 			{
 				Code = (int)StatusCode.InvalidArgument,
 				Message = "Validation failed",
@@ -30,8 +34,14 @@ namespace Discount.Application.Extensions
 
 			var trailers = new Metadata { { "grpc-status-details-bin", status.ToByteArray() } };
 
+			//! idk why this is not working (the fix is at the top and below this piece of code)
+			// return new RpcException(
+			// 	new Grpc.Core.Status(StatusCode.InvalidArgument, "Validation errors"),
+			// 	trailers
+			// );
+
 			return new RpcException(
-				new Grpc.Core.Status(StatusCode.InvalidArgument, "Validation errors"),
+				new GrpcStatus(StatusCode.InvalidArgument, "Validation errors"),
 				trailers
 			);
 		}

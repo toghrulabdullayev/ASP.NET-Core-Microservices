@@ -5,6 +5,6 @@ namespace Discount.Core.Entities
 		public int Id { get; set; }
 		public string ProductName { get; set; } = null!;
 		public string Description { get; set; } = null!;
-		public decimal Amount { get; set; }
+		public int Amount { get; set; }
 	}
 }

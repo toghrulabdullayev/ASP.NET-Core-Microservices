@@ -16,6 +16,23 @@ services:
     ports:
       - "6379:6379"
 
+  discountdb:
+    container_name: discountdb
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=Password123!
+      - POSTGRES_DB=DiscountDb
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d DiscountDb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   # double _ maps to : in the appsettings.json file, so we can set nested config values using env vars
   catalog:
     environment:
@@ -38,3 +55,12 @@ services:
       - basketdb
     ports:
       - "8001:8080"
+
+  discount:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings__ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=admin;Password=Password123!;"
+    depends_on:
+      - discountdb
+    ports:
+      - "8002:8080"
