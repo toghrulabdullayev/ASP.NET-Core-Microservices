@@ -13,7 +13,8 @@ namespace Discount.Infrastructure.Settings
 		{
 			using var scope = host.Services.CreateScope();
 			var services = scope.ServiceProvider;
-			var logger = services.GetRequiredService<ILogger>();
+			var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+			var logger = loggerFactory.CreateLogger("DiscountDbMigration");
 			var databaseSettings = services.GetRequiredService<IOptions<DatabaseSettings>>().Value;
 
 			try
