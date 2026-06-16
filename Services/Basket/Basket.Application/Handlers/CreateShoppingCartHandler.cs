@@ -1,5 +1,5 @@
 using Basket.Application.Commands;
-using Basket.Application.DTOs;
+using Basket.Application.GrpcService;
 using Basket.Application.Mappers;
 using Basket.Application.Responses;
 using Basket.Core.Repositories;
@@ -11,10 +11,15 @@ namespace Basket.Application.Handlers
 		: IRequestHandler<CreateShoppingCartCommand, ShoppingCartResponse>
 	{
 		private readonly IBasketRepository _basketRepository;
+		private readonly DiscountGrpcService _discountGrpcService;
 
-		public CreateShoppingCartHandler(IBasketRepository basketRepository)
+		public CreateShoppingCartHandler(
+			IBasketRepository basketRepository,
+			DiscountGrpcService discountGrpcService
+		)
 		{
 			_basketRepository = basketRepository;
+			_discountGrpcService = discountGrpcService;
 		}
 
 		public async Task<ShoppingCartResponse> Handle(
@@ -22,6 +27,13 @@ namespace Basket.Application.Handlers
 			CancellationToken cancellationToken
 		)
 		{
+			// apply discounts using GRPC call
+			foreach (var item in request.Items)
+			{
+				var coupon = await _discountGrpcService.GetDiscount(item.ProductName);
+				item.Price -= coupon.Amount;
+			}
+
 			// convert command to domain entity
 			var shoppingCartEntity = request.ToEntity();
 

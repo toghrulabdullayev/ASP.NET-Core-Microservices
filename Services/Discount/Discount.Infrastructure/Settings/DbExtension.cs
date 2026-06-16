@@ -1,6 +1,6 @@
-using Grpc.Core.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Npgsql;
 
@@ -18,13 +18,13 @@ namespace Discount.Infrastructure.Settings
 
 			try
 			{
-				logger.Info("Discount Db migration started.");
+				logger.LogInformation("Discount Db migration started.");
 				ApplyMigration(databaseSettings.ConnectionString);
-				logger.Info("Discount Db migration completed.");
+				logger.LogInformation("Discount Db migration completed.");
 			}
 			catch (Exception ex)
 			{
-				logger.Error(ex, "An error occurred while migrating the Discount database.");
+				logger.LogError(ex, "An error occurred while migrating the Discount database.");
 				throw;
 			}
 
