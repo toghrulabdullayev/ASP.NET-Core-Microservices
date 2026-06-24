@@ -18,4 +18,10 @@
 		<Project Path="Services/Discount/Discount.Core/Discount.Core.csproj" />
 		<Project Path="Services/Discount/Discount.Infrastructure/Discount.Infrastructure.csproj" />
 	</Folder>
+	<Folder Name="/Services/Ordering/">
+		<Project Path="Services/Ordering/Ordering.API/Ordering.API.csproj" />
+		<Project Path="Services/Ordering/Ordering.Application/Ordering.Application.csproj" />
+		<Project Path="Services/Ordering/Ordering.Core/Ordering.Core.csproj" />
+		<Project Path="Services/Ordering/Ordering.Infrastructure/Ordering.Infrastructure.csproj" />
+	</Folder>
 </Solution>
