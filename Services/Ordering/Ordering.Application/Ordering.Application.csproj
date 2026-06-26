@@ -3,6 +3,8 @@
 		<ProjectReference Include="..\Ordering.Core\Ordering.Core.csproj" />
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="FluentValidation" Version="12.1.1" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging" Version="11.0.0-preview.5.26302.115" />
 	</ItemGroup>
 
