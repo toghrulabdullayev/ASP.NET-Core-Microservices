@@ -12,6 +12,7 @@ namespace Ordering.Application.DTOs
 		string ZipCode,
 		string CardName,
 		string CardNumber,
+		string Expiration,
 		string CVV,
 		int PaymentMethod
 	);
@@ -29,6 +30,7 @@ namespace Ordering.Application.DTOs
 		string ZipCode,
 		string CardName,
 		string CardNumber,
+		string Expiration,
 		string CVV,
 		int PaymentMethod
 	);
