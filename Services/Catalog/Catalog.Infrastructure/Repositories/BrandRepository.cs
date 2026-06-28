@@ -12,6 +12,7 @@ namespace Catalog.Infrastructure.Repositories
 
 		public BrandRepository(IOptions<DatabaseSettings> options)
 		{
+			// todo: use MongoClient via DI registered as a singleton instead of creating mongo client anew each time
 			var settings = options.Value;
 			var client = new MongoClient(settings.ConnectionString);
 			var db = client.GetDatabase(settings.DatabaseName);

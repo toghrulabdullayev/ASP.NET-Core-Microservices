@@ -28,6 +28,7 @@ namespace Basket.Application.Handlers
 		)
 		{
 			// apply discounts using GRPC call
+			// todo: N + 1 problem
 			foreach (var item in request.Items)
 			{
 				var coupon = await _discountGrpcService.GetDiscount(item.ProductName);

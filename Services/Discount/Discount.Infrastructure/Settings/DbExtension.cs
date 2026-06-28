@@ -39,13 +39,30 @@ namespace Discount.Infrastructure.Settings
 			{
 				try
 				{
+					//? using var connection ... does something similar to defer connection.Close() in Go
 					using var connection = new NpgsqlConnection(connectionString);
 					connection.Open();
 
+					//? ADO.NET style db migration, dapper isn't used here (NpgsqlCommand)
 					using var cmd = new NpgsqlCommand { Connection = connection };
 					cmd.CommandText = "DROP TABLE IF EXISTS Coupon";
 					cmd.ExecuteNonQuery();
 
+					//? @" " is a verbatim string literal in C#, allows multiline strings and ignores escape sequences
+					//? """ """ (raw string literal, C# 11, can be more than 3 pairs) unlike verbatim,
+					//? allows for interpolation and escape sequences
+					/*
+						var name = "Toghrul";
+
+						var s = $$"""
+						{name}      // literal text
+						{{name}}    // interpolation
+						""";
+
+						Output:
+						{name}
+						Toghrul
+					*/
 					cmd.CommandText =
 						@"
             CREATE TABLE Coupon(

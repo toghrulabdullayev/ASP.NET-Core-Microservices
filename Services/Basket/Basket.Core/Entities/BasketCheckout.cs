@@ -2,6 +2,7 @@ namespace Basket.Core.Entities
 {
 	public class BasketCheckout
 	{
+		// todo: use required and string.Empty instead of nullable reference types
 		public string? UserName { get; set; }
 		public decimal TotalPrice { get; set; }
 		public string? FirstName { get; set; }

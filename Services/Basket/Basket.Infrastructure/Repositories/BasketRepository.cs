@@ -1,7 +1,7 @@
 using Basket.Core.Entities;
 using Basket.Core.Repositories;
 using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
+using Newtonsoft.Json; // todo: remove Newtonsoft.Json and use System.Text.Json instead
 
 namespace Basket.Infrastructure.Repositories
 {

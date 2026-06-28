@@ -33,6 +33,8 @@ namespace Catalog.Infrastructure.Repositories
 		public async Task<bool> DeleteProduct(string productId)
 		{
 			var deletedProduct = await _products.DeleteOneAsync(p => p.Id == productId);
+			//? IsAcknowledged - Did MongoDB successfully receive and acknowledge my request?
+			//? DeletedCount - How many documents were deleted?
 			return deletedProduct.IsAcknowledged && deletedProduct.DeletedCount > 0;
 		}
 
@@ -57,9 +59,11 @@ namespace Catalog.Infrastructure.Repositories
 			var filter = builder.Empty;
 			if (!string.IsNullOrEmpty(catalogSpecParams.Search))
 			{
+				//* better than builder.Eq("Name", "Phone"), because in case the field name changes,
+				//* the code will break (no compiler errors)
 				filter &= builder.Regex(
 					p => p.Name,
-					new BsonRegularExpression(catalogSpecParams.Search, "i")
+					new BsonRegularExpression(catalogSpecParams.Search, "i") // regex gives more control
 				);
 			}
 			if (!string.IsNullOrEmpty(catalogSpecParams.BrandId))
@@ -90,6 +94,7 @@ namespace Catalog.Infrastructure.Repositories
 			return await _products.Find(filter).ToListAsync();
 		}
 
+		//? IEnumerable - means it's a type where you can use foreach
 		public async Task<IEnumerable<Product>> GetProductsByName(string name)
 		{
 			var filter = Builders<Product>.Filter.Regex(

@@ -6,7 +6,7 @@ using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Data
 {
-	public class DatabaseSeeder
+	public static class DatabaseSeeder
 	{
 		public static async Task SeedAsync(IOptions<DatabaseSettings> options)
 		{

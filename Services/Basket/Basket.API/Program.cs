@@ -11,11 +11,13 @@ using static Discount.Grpc.Protos.DiscountProtoService;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+
+// built-in (Microsoft's) openapi/swagger support
+builder.Services.AddOpenApi(); // microsoft style openapi
 
 // add swagger services
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(); // swashbuckle style openapi
 
 // register mediatr
 var assemblies = new Assembly[]
@@ -63,13 +65,15 @@ builder.Services.AddStackExchangeRedisCache(
 
 var app = builder.Build();
 
+// todo: Use either swashbuckle or the built-in openapi support, not both.
+// todo: keep swashbuckle for swagger UI
 if (app.Environment.IsDevelopment())
 {
-	app.MapOpenApi();
+	app.MapOpenApi(); // microsoft style openapi
 }
 
 // enable swagger
-app.UseSwagger();
+app.UseSwagger(); // swashbuckle style openapi
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();

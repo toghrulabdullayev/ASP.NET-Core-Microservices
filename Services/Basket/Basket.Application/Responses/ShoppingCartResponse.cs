@@ -17,6 +17,16 @@ namespace Basket.Application.Responses
 			Items = items ?? new List<ShoppingCartItemResponse>();
 		}
 
+		// a computed property
 		public decimal TotalPrice => Items.Sum(item => item.Price * item.Quantity);
+		/* equivalent of:
+			public decimal TotalPrice
+			{
+				get
+				{
+					return Items.Sum(item => item.Price * item.Quantity);
+				}
+			}
+		*/
 	}
 }

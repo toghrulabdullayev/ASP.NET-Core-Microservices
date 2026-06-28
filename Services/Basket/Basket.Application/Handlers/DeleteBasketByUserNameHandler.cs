@@ -14,6 +14,7 @@ namespace Basket.Application.Handlers
 		}
 
 		//? Unit is used when we return nothing and we use MediatR (void can't be returned)
+		// todo: Unit is redundant, we can use void instead of Unit (remove Unit from IRequest and IRequestHandler)
 		public async Task<Unit> Handle(
 			DeleteBasketByUserNameCommand request,
 			CancellationToken cancellationToken

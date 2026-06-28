@@ -18,6 +18,7 @@ namespace Discount.Infrastructure.Repositories
 
 		public async Task<bool> CreateDiscount(Coupon coupon)
 		{
+			// todo: use NpgsqlDataSource registered as a singleton instead of creating npgsql connection anew each time
 			await using var connection = new NpgsqlConnection(_connectionString);
 			// returns numbers of rows affected (true if at least 1 row is affected)
 			var affected = await connection.ExecuteAsync(
@@ -34,6 +35,7 @@ namespace Discount.Infrastructure.Repositories
 
 		public async Task<bool> DeleteDiscount(string productName)
 		{
+			//? Here, Dapper is used. Queries are executed right on the connection var.
 			await using var connection = new NpgsqlConnection(_connectionString);
 			var affected = await connection.ExecuteAsync(
 				"DELETE FROM Coupon WHERE ProductName = @ProductName",
