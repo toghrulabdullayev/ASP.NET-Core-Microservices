@@ -6,6 +6,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="MassTransit" Version="9.2.0-develop.151" />
+		<PackageReference Include="MassTransit.RabbitMQ" Version="9.2.0-develop.151" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.8" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.1" />
 	</ItemGroup>
@@ -13,5 +15,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Basket.Application\Basket.Application.csproj" />
 		<ProjectReference Include="..\Basket.Infrastructure\Basket.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\..\Infrastructure\EventBus.Messages\EventBus.Messages.csproj" />
 	</ItemGroup>
 </Project>
