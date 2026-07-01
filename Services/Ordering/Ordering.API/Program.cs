@@ -28,8 +28,8 @@ app.MigrateDatabase<OrderContext>(
 	}
 );
 
-//using (var scope = app.Services.CreateScope())
-//{
+// using (var scope = app.Services.CreateScope())
+// {
 //    var logger = scope.ServiceProvider
 //        .GetRequiredService<ILogger<Program>>();
 
@@ -39,7 +39,7 @@ app.MigrateDatabase<OrderContext>(
 //    DbMigrationRunner.Run(
 //        configuration.GetConnectionString("OrderingConnectionString"),
 //        logger);
-//}
+// }
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -47,7 +47,7 @@ if (app.Environment.IsDevelopment())
 	app.MapOpenApi();
 }
 
-//Enable Swagger
+// Enable Swagger
 app.UseSwagger();
 app.UseSwaggerUI();
 
